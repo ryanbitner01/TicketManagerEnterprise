@@ -8,6 +8,7 @@
 import Foundation
 import Firebase
 import FirebaseAuth
+import FileProvider
 
 enum UserServiceError: Error {
     case NoEmail
@@ -19,7 +20,7 @@ enum UserServiceError: Error {
 }
 
 extension UserServiceError: LocalizedError {
-    private var errorDescription: String {
+    var errorDescription: String? {
         switch self {
         case .NoEmail:
             return "Could not download the email"
@@ -43,54 +44,63 @@ class UserService {
     
     static var instance: UserService = UserService()
     
-    func CheckLogin(username: String, password: String, completion: @escaping (Result<String, Error>) -> Void) {
+    func setRememberedEmail(rememberMe: Bool, email: String) {
+        if rememberMe {
+            UserDefaults.standard.userEmail = email
+        }
+    }
+    
+    func getRemmemberedEmail() -> String? {
+        return UserDefaults.standard.userEmail
+    }
+    
+    func CheckLogin(username: String, password: String, completion: @escaping (Result<String, UserServiceError>) -> Void) {
         Auth.auth().signIn(withEmail: username, password: password) { authDataResult, err in
-            if let err = err {
-                completion(.failure(UserServiceError.LoginNotValid))
-                fatalError("ERROR: \(err.localizedDescription)")
+            if err != nil {
+                completion(.failure(.LoginNotValid))
             } else if let authDataResult = authDataResult {
                 print("Logged In")
-                guard let email = authDataResult.user.email else { return AlertMessageService.instance.fatalErrorMessage(err: UserServiceError.NoEmail) }
+                guard let email = authDataResult.user.email else { return completion(.failure(.NoEmail)) }
                 if !authDataResult.user.isEmailVerified {
-                    return AlertMessageService.instance.fatalErrorMessage(err: UserServiceError.NotVerified)
+                    return completion(.failure(.NotVerified))
                 }
                 completion(.success(email))
             }
         }
     }
     
-    func getUser(email: String, completion: @escaping (User?) -> Void) {
+    func getUser(email: String, completion: @escaping (Result<User, UserServiceError>) -> Void) {
         db.collection("Users").whereField("email", isEqualTo: email).getDocuments { qs, err in
             if let qs = qs {
                 let doc = qs.documents[0]
                 let data = doc.data()
-                guard let accountType = data["accountType"] as? String, let uuidString = data["uuid"] as? String, let uuid = UUID(uuidString: uuidString) else {
-                    completion(nil)
-                    return AlertMessageService.instance.fatalErrorMessage(err: UserServiceError.NoAccountType)
+                guard let accountType = data["accountType"] as? String,
+                      let uuidString = data["uuid"] as? String,
+                      let uuid = UUID(uuidString: uuidString) else {
+                    return completion(.failure(.NoAccountType))
                 }
                 switch accountType {
                 case String(describing: AccountType.admin):
                     let admin = Admin(email: email, uuid: uuid)
-                    completion(admin)
+                    completion(.success(admin))
                 default:
-                    AlertMessageService.instance.fatalErrorMessage(err: UserServiceError.NoAccountType)
+                    completion(.failure(.NoAccountType))
                 }
                 
             } else if err != nil {
-                completion(nil)
-                return AlertMessageService.instance.fatalErrorMessage(err: UserServiceError.NoDoc)
+                return completion(.failure(.NoDoc))
             }
         }
     }
     
-    func login(email: String, completion: @escaping (Bool) -> Void) {
-        getUser(email: email) { user in
-            if let user = user {
+    func login(email: String, completion: @escaping (UserServiceError?) -> Void) {
+        getUser(email: email) { result in
+            switch result {
+            case .success(let user):
                 self.user = user
-                completion(true)
-            } else {
-                completion(false)
-                AlertMessageService.instance.fatalErrorMessage(err: UserServiceError.NoUser)
+                completion(nil)
+            case .failure(let err):
+                completion(err)
             }
         }
     }
@@ -100,6 +110,25 @@ class UserService {
         try Auth.auth().signOut()
         } catch let err as NSError {
             fatalError("ERROR \(err.localizedDescription)")
+        }
+    }
+    
+    func sendVerificationEmail() {
+        auth.currentUser?.sendEmailVerification(completion: { err in
+            if err != nil {
+                fatalError("Could not send Verification Email!")
+            }
+        })
+    }
+}
+
+extension UserDefaults {
+    var userEmail: String? {
+        get {
+            self.string(forKey: #function)
+        }
+        set {
+            self.setValue(newValue, forKey: #function)
         }
     }
 }

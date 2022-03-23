@@ -6,12 +6,13 @@
 //
 
 import Foundation
+import UIKit
 
-class AlertMessageService {
-    static let instance = AlertMessageService()
-
-    func fatalErrorMessage(err: Error) {
-        
-        fatalError("ERROR: \(err.localizedDescription)")
+extension UIViewController {
+    func showAlertWithMessage(_ message: String) {
+        let alertController = UIAlertController(title: "ERROR", message: message, preferredStyle: .actionSheet)
+        let okayAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        alertController.addAction(okayAction)
+        self.present(alertController, animated: true, completion: nil)
     }
 }

@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		1E36FC2627E8CF160029EE0F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E36FC2527E8CF160029EE0F /* AppDelegate.swift */; };
 		1E36FC2827E8CF160029EE0F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E36FC2727E8CF160029EE0F /* SceneDelegate.swift */; };
-		1E36FC2A27E8CF160029EE0F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E36FC2927E8CF160029EE0F /* ViewController.swift */; };
 		1E36FC2D27E8CF160029EE0F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E36FC2B27E8CF160029EE0F /* Main.storyboard */; };
 		1E36FC2F27E8CF170029EE0F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E36FC2E27E8CF170029EE0F /* Assets.xcassets */; };
 		1E36FC3227E8CF170029EE0F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E36FC3027E8CF170029EE0F /* LaunchScreen.storyboard */; };
@@ -25,6 +24,8 @@
 		1E36FC6627E8DECD0029EE0F /* Admin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E36FC6527E8DECD0029EE0F /* Admin.swift */; };
 		1E36FC6927E8E2630029EE0F /* Admin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E36FC6827E8E2630029EE0F /* Admin.storyboard */; };
 		1E36FC6C27E8E2CA0029EE0F /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E36FC6B27E8E2C90029EE0F /* UserService.swift */; };
+		1EE7F00127EB95E30045D7CF /* BounceAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE7F00027EB95E30045D7CF /* BounceAnimation.swift */; };
+		1EE7F00327EBA7B50045D7CF /* VerifyEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE7F00227EBA7B50045D7CF /* VerifyEmailViewController.swift */; };
 		1EEDD04D27EAE8D8007631B1 /* LoginUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EEDD04C27EAE8D8007631B1 /* LoginUserViewController.swift */; };
 		1EEDD04F27EAEDCA007631B1 /* AlertMessageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EEDD04E27EAEDCA007631B1 /* AlertMessageService.swift */; };
 /* End PBXBuildFile section */
@@ -50,7 +51,6 @@
 		1E36FC2227E8CF160029EE0F /* TicketManagerEnterprise.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TicketManagerEnterprise.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E36FC2527E8CF160029EE0F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1E36FC2727E8CF160029EE0F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		1E36FC2927E8CF160029EE0F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		1E36FC2C27E8CF160029EE0F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1E36FC2E27E8CF170029EE0F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1E36FC3127E8CF170029EE0F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -65,6 +65,8 @@
 		1E36FC6527E8DECD0029EE0F /* Admin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Admin.swift; sourceTree = "<group>"; };
 		1E36FC6827E8E2630029EE0F /* Admin.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Admin.storyboard; sourceTree = "<group>"; };
 		1E36FC6B27E8E2C90029EE0F /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		1EE7F00027EB95E30045D7CF /* BounceAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BounceAnimation.swift; sourceTree = "<group>"; };
+		1EE7F00227EBA7B50045D7CF /* VerifyEmailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyEmailViewController.swift; sourceTree = "<group>"; };
 		1EEDD04C27EAE8D8007631B1 /* LoginUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUserViewController.swift; sourceTree = "<group>"; };
 		1EEDD04E27EAEDCA007631B1 /* AlertMessageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertMessageService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -121,11 +123,11 @@
 		1E36FC2427E8CF160029EE0F /* TicketManagerEnterprise */ = {
 			isa = PBXGroup;
 			children = (
+				1EE7EFFF27EB95C80045D7CF /* Animations */,
 				1E36FC6727E8E24F0029EE0F /* Admin */,
 				1E36FC6127E8DCDA0029EE0F /* Users */,
 				1E36FC2527E8CF160029EE0F /* AppDelegate.swift */,
 				1E36FC2727E8CF160029EE0F /* SceneDelegate.swift */,
-				1E36FC2927E8CF160029EE0F /* ViewController.swift */,
 				1E36FC2E27E8CF170029EE0F /* Assets.xcassets */,
 				1E36FC3027E8CF170029EE0F /* LaunchScreen.storyboard */,
 				1E36FC3327E8CF170029EE0F /* Info.plist */,
@@ -188,10 +190,19 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
+		1EE7EFFF27EB95C80045D7CF /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+				1EE7F00027EB95E30045D7CF /* BounceAnimation.swift */,
+			);
+			path = Animations;
+			sourceTree = "<group>";
+		};
 		1EEDD04927EAE852007631B1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				1EEDD04C27EAE8D8007631B1 /* LoginUserViewController.swift */,
+				1EE7F00227EBA7B50045D7CF /* VerifyEmailViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -342,8 +353,9 @@
 				1E36FC6C27E8E2CA0029EE0F /* UserService.swift in Sources */,
 				1E36FC6427E8DD0F0029EE0F /* User.swift in Sources */,
 				1EEDD04D27EAE8D8007631B1 /* LoginUserViewController.swift in Sources */,
-				1E36FC2A27E8CF160029EE0F /* ViewController.swift in Sources */,
 				1E36FC2627E8CF160029EE0F /* AppDelegate.swift in Sources */,
+				1EE7F00327EBA7B50045D7CF /* VerifyEmailViewController.swift in Sources */,
+				1EE7F00127EB95E30045D7CF /* BounceAnimation.swift in Sources */,
 				1E36FC6627E8DECD0029EE0F /* Admin.swift in Sources */,
 				1E36FC2827E8CF160029EE0F /* SceneDelegate.swift in Sources */,
 			);

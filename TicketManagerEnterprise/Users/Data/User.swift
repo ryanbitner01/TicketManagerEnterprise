@@ -11,7 +11,7 @@ enum AccountType: String {
     case admin
 }
 
-protocol User {
+protocol User: Codable {
     var email: String {get set}
     var id: UUID {get}
     

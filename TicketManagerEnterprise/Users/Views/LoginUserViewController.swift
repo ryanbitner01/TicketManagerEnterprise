@@ -25,6 +25,7 @@ class LoginUserViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         getRememberedEmail()
+        self.hideKeyboardTappedAround()
         // Do any additional setup after loading the view.
     }
     

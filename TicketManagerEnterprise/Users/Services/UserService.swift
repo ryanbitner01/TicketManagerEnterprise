@@ -17,6 +17,7 @@ enum UserServiceError: Error {
     case NoAccountType
     case NoDoc
     case NoUser
+    case CantGetData
 }
 
 extension UserServiceError: LocalizedError {
@@ -34,6 +35,8 @@ extension UserServiceError: LocalizedError {
             return "No Document Snapshot"
         case .NoUser:
             return "No User Found"
+        case .CantGetData:
+            return "Couldn't get data from JSON"
         }
     }
 }
@@ -44,6 +47,24 @@ class UserService {
     
     static var instance: UserService = UserService()
     
+    // MARK: Add User
+    
+    func passwordVerification(_ text: String) -> Bool {
+        let requirements = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$"
+        return NSPredicate(format: "SELF MATCHES %@", requirements).evaluate(with: text)
+    }
+    
+    func emailVerification(_ text: String) -> Bool {
+        let requirements = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+        return NSPredicate(format: "SELF MATCHES %@", requirements).evaluate(with: text)
+    }
+    
+    func passwordMatch(password1: String, password2: String) -> Bool {
+        return password1 == password2
+    }
+
+    // MARK: Login User
+
     func setRememberedEmail(rememberMe: Bool, email: String) {
         if rememberMe {
             UserDefaults.standard.userEmail = email
@@ -74,18 +95,21 @@ class UserService {
             if let qs = qs {
                 let doc = qs.documents[0]
                 let data = doc.data()
-                guard let accountType = data["accountType"] as? String,
-                      let uuidString = data["uuid"] as? String,
-                      let uuid = UUID(uuidString: uuidString) else {
-                    return completion(.failure(.NoAccountType))
+                let accountType = data["accountType"] as? String
+                do {
+                    let jsonData = try JSONSerialization.data(withJSONObject: data, options: .prettyPrinted)
+                    switch accountType {
+                    case String(describing: AccountType.admin):
+                        let user = try JSONDecoder().decode(Admin.self, from: jsonData)
+                        completion(.success(user))
+                    default:
+                        completion(.failure(.NoAccountType))
+                    }
+                } catch let err {
+                    print(err.localizedDescription)
+                    completion(.failure(.CantGetData))
                 }
-                switch accountType {
-                case String(describing: AccountType.admin):
-                    let admin = Admin(email: email, uuid: uuid)
-                    completion(.success(admin))
-                default:
-                    completion(.failure(.NoAccountType))
-                }
+                
                 
             } else if err != nil {
                 return completion(.failure(.NoDoc))

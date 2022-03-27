@@ -13,6 +13,7 @@ enum AccountType: String {
 
 protocol User: Codable {
     var email: String {get set}
-    var id: UUID {get}
-    
+    // var id: UUID {get}
+    var firstName: String {get set}
+    var lastName: String {get set}
 }

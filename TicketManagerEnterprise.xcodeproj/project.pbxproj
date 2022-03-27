@@ -29,6 +29,7 @@
 		1EB5AEA927EE70ED004A571A /* OrgListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB5AEA827EE70ED004A571A /* OrgListViewController.swift */; };
 		1EB5AEAB27EE70FE004A571A /* OrgService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB5AEAA27EE70FE004A571A /* OrgService.swift */; };
 		1EB5AEAD27EE7D5B004A571A /* Org.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB5AEAC27EE7D5B004A571A /* Org.swift */; };
+		1EB5AEB027F00213004A571A /* HideKeyboardExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB5AEAF27F00213004A571A /* HideKeyboardExtension.swift */; };
 		1EE7F00127EB95E30045D7CF /* BounceAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE7F00027EB95E30045D7CF /* BounceAnimation.swift */; };
 		1EE7F00327EBA7B50045D7CF /* VerifyEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE7F00227EBA7B50045D7CF /* VerifyEmailViewController.swift */; };
 		1EEDD04D27EAE8D8007631B1 /* LoginUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EEDD04C27EAE8D8007631B1 /* LoginUserViewController.swift */; };
@@ -75,6 +76,7 @@
 		1EB5AEA827EE70ED004A571A /* OrgListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrgListViewController.swift; sourceTree = "<group>"; };
 		1EB5AEAA27EE70FE004A571A /* OrgService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrgService.swift; sourceTree = "<group>"; };
 		1EB5AEAC27EE7D5B004A571A /* Org.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Org.swift; sourceTree = "<group>"; };
+		1EB5AEAF27F00213004A571A /* HideKeyboardExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HideKeyboardExtension.swift; sourceTree = "<group>"; };
 		1EE7F00027EB95E30045D7CF /* BounceAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BounceAnimation.swift; sourceTree = "<group>"; };
 		1EE7F00227EBA7B50045D7CF /* VerifyEmailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyEmailViewController.swift; sourceTree = "<group>"; };
 		1EEDD04C27EAE8D8007631B1 /* LoginUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUserViewController.swift; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 		1E36FC2427E8CF160029EE0F /* TicketManagerEnterprise */ = {
 			isa = PBXGroup;
 			children = (
+				1EB5AEAE27F001F6004A571A /* Extensions */,
 				1E36FC6727E8E24F0029EE0F /* Admin */,
 				1EE7EFFF27EB95C80045D7CF /* Animations */,
 				1E36FC6127E8DCDA0029EE0F /* Users */,
@@ -227,6 +230,14 @@
 				1EB5AEAC27EE7D5B004A571A /* Org.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		1EB5AEAE27F001F6004A571A /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				1EB5AEAF27F00213004A571A /* HideKeyboardExtension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		1EE7EFFF27EB95C80045D7CF /* Animations */ = {
@@ -391,6 +402,7 @@
 			files = (
 				1EB5AEAD27EE7D5B004A571A /* Org.swift in Sources */,
 				1EEDD04F27EAEDCA007631B1 /* AlertMessageService.swift in Sources */,
+				1EB5AEB027F00213004A571A /* HideKeyboardExtension.swift in Sources */,
 				1E36FC6C27E8E2CA0029EE0F /* UserService.swift in Sources */,
 				1E36FC6427E8DD0F0029EE0F /* User.swift in Sources */,
 				1EEDD04D27EAE8D8007631B1 /* LoginUserViewController.swift in Sources */,

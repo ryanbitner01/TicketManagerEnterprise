@@ -15,19 +15,32 @@ class OrgListViewController: UIViewController, OrgListVCDelegate {
     
     var orgService: OrgService = OrgServiceFirebase.instance
 
+    @IBOutlet weak var refreshButton: UIBarButtonItem!
     @IBOutlet weak var listView: UITableView!
+    @IBOutlet weak var searchTextBar: UISearchBar!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        orgService.getAllOrgList()
         orgService.orgListVCDelegate = self
         listView.delegate = self
         listView.dataSource = self
+        searchTextBar.delegate = self
+        self.hideKeyboardTappedAround()
         // Do any additional setup after loading the view.
     }
     
     func updateView() {
-        listView.reloadData()
+        DispatchQueue.main.async {
+            self.listView.reloadData()
+        }
+    }
+    
+    @IBAction func resfreshButtonPressed(_ sender: Any) {
+        self.refreshData()
+    }
+    
+    func refreshData() {
+        orgService.getAllOrgList()
     }
     
 
@@ -45,16 +58,22 @@ class OrgListViewController: UIViewController, OrgListVCDelegate {
 
 extension OrgListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return orgService.orgArray.count
+        return orgService.orgQueried.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: OrgListTableViewCell.cellIdentifier, for: indexPath) as? OrgListTableViewCell else {return UITableViewCell()}
-        let org = orgService.orgArray[indexPath.row]
+        let org = orgService.orgQueried[indexPath.row]
         cell.org = org
         cell.updateCell()
         return cell
     }
     
     
+}
+
+extension OrgListViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        orgService.queryText = searchBar.text ?? ""
+    }
 }

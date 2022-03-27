@@ -22,10 +22,12 @@ extension OrgError: LocalizedError {
 }
 
 protocol OrgService {
-    var orgArray: [Org] {get}
+    var orgArray: [Org] {get set}
+    var orgQueried: [Org] {get set}
+    var queryText: String {get set}
     var orgListVCDelegate: OrgListVCDelegate? {get set}
-    
     func getAllOrgList()
+    func searchOrgs(_ text: String)
 }
 
 class OrgServiceFirebase: OrgService {
@@ -34,7 +36,19 @@ class OrgServiceFirebase: OrgService {
     
     static let instance = OrgServiceFirebase()
     
-    var orgArray: [Org] {
+    var orgArray: [Org] = [] {
+        didSet {
+            
+        }
+    }
+    
+    var queryText: String = "" {
+        didSet {
+            searchOrgs(queryText)
+        }
+    }
+    
+    var orgQueried: [Org] = [] {
         didSet {
             orgListVCDelegate?.updateView()
         }
@@ -43,7 +57,6 @@ class OrgServiceFirebase: OrgService {
     let orgServiceDB = db.collection("Orginizations")
     
     init() {
-        self.orgArray = [Org]()
         getAllOrgList()
     }
     
@@ -53,10 +66,22 @@ class OrgServiceFirebase: OrgService {
             case .success(let orgs):
                 DispatchQueue.main.async {
                     self.orgArray = orgs
+                    self.searchOrgs("")
                 }
             case .failure(let err):
                 print(err.localizedDescription)
             }
+        }
+    }
+    
+    func searchOrgs(_ text: String) {
+        if text != "" {
+            let queried = orgArray.filter({
+                $0.name.lowercased().contains(text.lowercased()) || $0.id.lowercased().contains(text.lowercased())
+            })
+            self.orgQueried = queried
+        } else {
+            self.orgQueried = orgArray
         }
     }
     

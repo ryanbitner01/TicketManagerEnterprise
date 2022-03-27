@@ -41,14 +41,14 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="OrgListCell" id="sgv-GI-JRZ" customClass="OrgListTableViewCell" customModule="TicketManagerEnterprise" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="44.5" width="414" height="43.5"/>
+                                        <rect key="frame" x="0.0" y="44.5" width="414" height="43"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="sgv-GI-JRZ" id="NkK-mH-NFn">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ORG ID#" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cCR-KD-87E">
-                                                    <rect key="frame" x="20" y="11" width="75" height="21.5"/>
+                                                    <rect key="frame" x="20" y="11" width="75" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="75" id="15y-MF-5er"/>
                                                     </constraints>
@@ -57,7 +57,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O8S-uL-YNw">
-                                                    <rect key="frame" x="103" y="11" width="291" height="21.5"/>
+                                                    <rect key="frame" x="103" y="11" width="291" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -93,9 +93,17 @@
                             <constraint firstItem="tEe-6N-k1n" firstAttribute="leading" secondItem="dQ0-kB-kcs" secondAttribute="leading" id="od7-9a-fcR"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Org List" id="DOx-Ou-NIA"/>
+                    <navigationItem key="navigationItem" title="Org List" id="DOx-Ou-NIA">
+                        <barButtonItem key="rightBarButtonItem" image="arrow.clockwise" catalog="system" id="x19-IE-T86">
+                            <connections>
+                                <action selector="resfreshButtonPressed:" destination="EF4-4c-2oE" id="KWe-x2-cJs"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="listView" destination="sgT-14-qRC" id="etS-BQ-Fm0"/>
+                        <outlet property="refreshButton" destination="x19-IE-T86" id="3dS-gx-IRO"/>
+                        <outlet property="searchTextBar" destination="tEe-6N-k1n" id="wcu-b4-VVv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pSU-6m-yET" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -104,6 +112,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="arrow.clockwise" catalog="system" width="115" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

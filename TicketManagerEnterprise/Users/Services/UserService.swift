@@ -91,7 +91,7 @@ class UserService {
     }
     
     func getUser(email: String, completion: @escaping (Result<User, UserServiceError>) -> Void) {
-        db.collection("Users").whereField("email", isEqualTo: email).getDocuments { qs, err in
+        db.collection("users").whereField("email", isEqualTo: email).getDocuments { qs, err in
             if let qs = qs {
                 let doc = qs.documents[0]
                 let data = doc.data()

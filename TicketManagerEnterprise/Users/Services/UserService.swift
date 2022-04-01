@@ -10,6 +10,14 @@ import Firebase
 import FirebaseAuth
 import FileProvider
 
+private struct UserRegistrationRequest: Codable {
+    var email: String
+    var firstName: String
+    var lastName: String
+    var uuid: String
+    var accountType: String
+}
+
 enum UserServiceError: Error {
     case NoEmail
     case NotVerified
@@ -49,6 +57,37 @@ class UserService {
     
     // MARK: Add User
     
+    func saveUser(email: String, firstName: String, lastName: String, uuid: String) {
+        let jsonData = [
+            "email": email,
+            "firstName": firstName,
+            "lastName": lastName,
+            "uuid": uuid,
+            "accountType": "user"
+        ]
+        db.collection("requests").document().setData(jsonData)
+    }
+    
+    func registerUser(email: String, password: String) {
+        auth.createUser(withEmail: email, password: password) { _, err in
+            if let err = err {
+                print(err.localizedDescription)
+            }
+        }
+    }
+    
+    func checkForDuplicateEmailInFirestore(email: String, completion: @escaping (Bool) -> Void) {
+        functions.httpsCallable("checkForDuplicateEmails").call(["email": email]) { result, err in
+            if let result = result {
+                if let data = result.data as? Bool {
+                    completion(data)
+                } else {
+                    print("NO BOOL")
+                }
+            }
+        }
+    }
+    
     func passwordVerification(_ text: String) -> Bool {
         let requirements = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$"
         return NSPredicate(format: "SELF MATCHES %@", requirements).evaluate(with: text)
@@ -62,9 +101,9 @@ class UserService {
     func passwordMatch(password1: String, password2: String) -> Bool {
         return password1 == password2
     }
-
+    
     // MARK: Login User
-
+    
     func setRememberedEmail(rememberMe: Bool, email: String) {
         if rememberMe {
             UserDefaults.standard.userEmail = email
@@ -131,7 +170,7 @@ class UserService {
     
     func Logout() {
         do {
-        try Auth.auth().signOut()
+            try Auth.auth().signOut()
         } catch let err as NSError {
             fatalError("ERROR \(err.localizedDescription)")
         }

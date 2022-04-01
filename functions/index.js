@@ -9,7 +9,7 @@ exports.handleNewUserRequest = functions.firestore
     .document("requests/{newDoc}")
     .onCreate((snap, context) => {
       const data = snap.data();
-      return admin.firestore().collection("users").doc(data.uuid).set({
+      return admin.firestore().collection("users").doc(data.email).set({
         email: data.email,
         firstName: data.firstName,
         lastName: data.lastName,
@@ -26,4 +26,24 @@ function deleteRequest(docID) {
       .collection("requests")
       .doc(docID).delete();
 }
+
+exports.checkForDuplicateEmails = functions.https.onCall((data, context) => {
+  return admin.firestore()
+      .collection("users")
+      .doc(data.email)
+      .get()
+      .then((docSnapshot) => {
+        if (docSnapshot.exists) {
+          console.log("Exists");
+          return true;
+        } else if (!docSnapshot.exists) {
+          console.log("doesn't exist");
+          return false;
+        } else {
+          console.log("WHAT IS A DOC SNAPSHOT");
+        }
+      }).catch((err) => {
+        console.log(err);
+      });
+});
 

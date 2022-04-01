@@ -8,6 +8,11 @@
 import UIKit
 
 class RegisterUserViewController: UIViewController {
+    
+    enum InvalidEmailMessage: String {
+        case duplicateEmail = "A user with this email already exists"
+        case invalidFormat = "This is not a valid email address"
+    }
 
     @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var firstNameBlankLabel: UILabel!
@@ -22,6 +27,11 @@ class RegisterUserViewController: UIViewController {
     @IBOutlet weak var retypePasswordTextField: UITextField!
     
     let userService: UserService = UserService.instance
+    var shouldSave: Bool = false {
+        didSet {
+            saveUser()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,35 +48,57 @@ class RegisterUserViewController: UIViewController {
         self.firstNameBlankLabel.isHidden = true
     }
     
-    func shouldSave() -> Bool {
-        let requirements = checkRequirements()
-        return requirements
+    func checkOtherRequirements(duplicateEmail: Bool) -> Bool {
+        let validEmail = self.userService.emailVerification(self.emailTextField.text!)
+        let validPassword = self.userService.passwordVerification(self.passwordTextField.text!)
+        let passwordMatch = self.userService.passwordMatch(password1: self.passwordTextField.text!, password2: self.retypePasswordTextField.text!)
+        let firstNameEmpty = !self.firstNameTextField.text!.isEmpty
+        let lastNameEmpty = !self.lastNameTextField.text!.isEmpty
+        DispatchQueue.main.async {
+            self.invalidPasswordLabel.isHidden = validPassword
+            self.passwordMatchLabel.isHidden = passwordMatch
+            self.firstNameBlankLabel.isHidden = firstNameEmpty
+            self.lastNameBlankLabel.isHidden = lastNameEmpty
+            if duplicateEmail {
+                self.showEmailLabel(message: .duplicateEmail)
+            } else if !validEmail {
+                self.showEmailLabel(message: .invalidFormat)
+            }
+        }
+        return validEmail && validPassword && passwordMatch && firstNameEmpty && lastNameEmpty && !duplicateEmail
     }
     
-    func checkRequirements() -> Bool {
-        let validEmail = userService.emailVerification(emailTextField.text!)
-        let validPassword = userService.passwordVerification(passwordTextField.text!)
-        let passwordMatch = userService.passwordMatch(password1: passwordTextField.text!, password2: retypePasswordTextField.text!)
-        let firstNameEmpty = !firstNameTextField.text!.isEmpty
-        let lastNameEmpty = !lastNameTextField.text!.isEmpty
-        invalidEmailLabel.isHidden = validEmail
-        invalidPasswordLabel.isHidden = validPassword
-        passwordMatchLabel.isHidden = passwordMatch
-        firstNameBlankLabel.isHidden = firstNameEmpty
-        lastNameBlankLabel.isHidden = lastNameEmpty
-        
-        return validEmail && validPassword && passwordMatch && firstNameEmpty && lastNameEmpty
-    }
-    
-    @IBAction func saveButtonPressed(_ sender: Any) {
-        let shouldSave = shouldSave()
-        if shouldSave {
-            saveUser()
+    func checkRequirements() {
+        userService.checkForDuplicateEmailInFirestore(email: emailTextField.text!) { duplicate in
+            if !duplicate {
+                let requirements = self.checkOtherRequirements(duplicateEmail: duplicate)
+                self.shouldSave = requirements
+            }
+            else {
+                DispatchQueue.main.async {
+                    let requirements = self.checkOtherRequirements(duplicateEmail: duplicate)
+                    self.shouldSave = requirements
+                }
+            }
         }
     }
     
+    func showEmailLabel(message: InvalidEmailMessage) {
+        let message = message.rawValue
+        self.invalidEmailLabel.text = message
+        self.invalidEmailLabel.isHidden = false
+    }
+    
+    @IBAction func saveButtonPressed(_ sender: Any) {
+        checkRequirements()
+    }
+    
     func saveUser() {
-        
+        if shouldSave {
+            print("SAVED")
+            userService.registerUser(email: emailTextField.text!, password: passwordTextField.text!)
+            userService.saveUser(email: emailTextField.text!, firstName: firstNameTextField.text!, lastName: lastNameTextField.text!, uuid: UUID().uuidString)
+        }
     }
 
 }

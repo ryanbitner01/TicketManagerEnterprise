@@ -10,6 +10,7 @@ import Firebase
 
 let db = Firestore.firestore()
 let auth = Auth.auth()
+var functions = Functions.functions()
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {

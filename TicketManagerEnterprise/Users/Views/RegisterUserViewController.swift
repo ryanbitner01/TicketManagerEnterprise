@@ -33,11 +33,23 @@ class RegisterUserViewController: UIViewController {
         }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        self.clearText()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardTappedAround()
         self.initializeView()
         // Do any additional setup after loading the view.
+    }
+    
+    func clearText() {
+        self.emailTextField.text = ""
+        self.firstNameTextField.text = ""
+        self.lastNameTextField.text = ""
+        self.passwordTextField.text = ""
+        self.retypePasswordTextField.text = ""
     }
     
     func initializeView() {
@@ -98,6 +110,8 @@ class RegisterUserViewController: UIViewController {
             print("SAVED")
             userService.registerUser(email: emailTextField.text!, password: passwordTextField.text!)
             userService.saveUser(email: emailTextField.text!, firstName: firstNameTextField.text!, lastName: lastNameTextField.text!, uuid: UUID().uuidString)
+            self.performSegue(withIdentifier: "ToVerifyEmailVC", sender: self)
+            self.clearText()
         }
     }
 

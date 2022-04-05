@@ -72,6 +72,18 @@ class UserService {
         auth.createUser(withEmail: email, password: password) { _, err in
             if let err = err {
                 print(err.localizedDescription)
+            } else {
+                self.CheckLogin(username: email, password: password) { result in
+                    switch result {
+                    case.success(let email):
+                        print("logged in: \(email)")
+                    case .failure(let err):
+                        print(err.localizedDescription)
+                        if err == .NotVerified {
+                            self.sendVerificationEmail()
+                        }
+                    }
+                }
             }
         }
     }
@@ -116,7 +128,8 @@ class UserService {
     
     func CheckLogin(username: String, password: String, completion: @escaping (Result<String, UserServiceError>) -> Void) {
         Auth.auth().signIn(withEmail: username, password: password) { authDataResult, err in
-            if err != nil {
+            if let err = err {
+                print(err.localizedDescription)
                 completion(.failure(.LoginNotValid))
             } else if let authDataResult = authDataResult {
                 print("Logged In")

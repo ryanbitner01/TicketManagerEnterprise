@@ -9,13 +9,19 @@ import Foundation
 
 class Admin: User, Codable {
     
+    var firstName: String
+    
+    var lastName: String
+    
     var email: String
     
-    var id: UUID
+  //  var id: UUID
     
-    init (email: String, uuid: UUID) {
+    init (email: String, uuid: UUID, firstName: String, lastName: String) {
         self.email = email
-        self.id = uuid
+        //self.id = uuid
+        self.firstName = firstName
+        self.lastName = lastName
     }
     
 }

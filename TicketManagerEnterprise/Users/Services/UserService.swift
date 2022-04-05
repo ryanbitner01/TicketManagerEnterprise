@@ -10,6 +10,14 @@ import Firebase
 import FirebaseAuth
 import FileProvider
 
+private struct UserRegistrationRequest: Codable {
+    var email: String
+    var firstName: String
+    var lastName: String
+    var uuid: String
+    var accountType: String
+}
+
 enum UserServiceError: Error {
     case NoEmail
     case NotVerified
@@ -17,6 +25,7 @@ enum UserServiceError: Error {
     case NoAccountType
     case NoDoc
     case NoUser
+    case CantGetData
 }
 
 extension UserServiceError: LocalizedError {
@@ -34,6 +43,8 @@ extension UserServiceError: LocalizedError {
             return "No Document Snapshot"
         case .NoUser:
             return "No User Found"
+        case .CantGetData:
+            return "Couldn't get data from JSON"
         }
     }
 }
@@ -43,6 +54,67 @@ class UserService {
     var user: User?
     
     static var instance: UserService = UserService()
+    
+    // MARK: Add User
+    
+    func saveUser(email: String, firstName: String, lastName: String, uuid: String) {
+        let jsonData = [
+            "email": email,
+            "firstName": firstName,
+            "lastName": lastName,
+            "uuid": uuid,
+            "accountType": "user"
+        ]
+        db.collection("requests").document().setData(jsonData)
+    }
+    
+    func registerUser(email: String, password: String) {
+        auth.createUser(withEmail: email, password: password) { _, err in
+            if let err = err {
+                print(err.localizedDescription)
+            } else {
+                self.CheckLogin(username: email, password: password) { result in
+                    switch result {
+                    case.success(let email):
+                        print("logged in: \(email)")
+                    case .failure(let err):
+                        print(err.localizedDescription)
+                        if err == .NotVerified {
+                            self.sendVerificationEmail()
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    func checkForDuplicateEmailInFirestore(email: String, completion: @escaping (Bool) -> Void) {
+        functions.httpsCallable("checkForDuplicateEmails").call(["email": email]) { result, err in
+            if let result = result {
+                if let data = result.data as? Bool {
+                    completion(data)
+                } else {
+                    print("NO BOOL")
+                }
+            }
+        }
+    }
+    
+    func passwordVerification(_ text: String) -> Bool {
+        let requirements = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$"
+        return NSPredicate(format: "SELF MATCHES %@", requirements).evaluate(with: text)
+    }
+    
+    func emailVerification(_ text: String) -> Bool {
+        let requirements = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+        return NSPredicate(format: "SELF MATCHES %@", requirements).evaluate(with: text)
+    }
+    
+    func passwordMatch(password1: String, password2: String) -> Bool {
+        return password1 == password2
+    }
+    
+    // MARK: Login User
     
     func setRememberedEmail(rememberMe: Bool, email: String) {
         if rememberMe {
@@ -56,7 +128,8 @@ class UserService {
     
     func CheckLogin(username: String, password: String, completion: @escaping (Result<String, UserServiceError>) -> Void) {
         Auth.auth().signIn(withEmail: username, password: password) { authDataResult, err in
-            if err != nil {
+            if let err = err {
+                print(err.localizedDescription)
                 completion(.failure(.LoginNotValid))
             } else if let authDataResult = authDataResult {
                 print("Logged In")
@@ -70,22 +143,25 @@ class UserService {
     }
     
     func getUser(email: String, completion: @escaping (Result<User, UserServiceError>) -> Void) {
-        db.collection("Users").whereField("email", isEqualTo: email).getDocuments { qs, err in
+        db.collection("users").whereField("email", isEqualTo: email).getDocuments { qs, err in
             if let qs = qs {
                 let doc = qs.documents[0]
                 let data = doc.data()
-                guard let accountType = data["accountType"] as? String,
-                      let uuidString = data["uuid"] as? String,
-                      let uuid = UUID(uuidString: uuidString) else {
-                    return completion(.failure(.NoAccountType))
+                let accountType = data["accountType"] as? String
+                do {
+                    let jsonData = try JSONSerialization.data(withJSONObject: data, options: .prettyPrinted)
+                    switch accountType {
+                    case String(describing: AccountType.admin):
+                        let user = try JSONDecoder().decode(Admin.self, from: jsonData)
+                        completion(.success(user))
+                    default:
+                        completion(.failure(.NoAccountType))
+                    }
+                } catch let err {
+                    print(err.localizedDescription)
+                    completion(.failure(.CantGetData))
                 }
-                switch accountType {
-                case String(describing: AccountType.admin):
-                    let admin = Admin(email: email, uuid: uuid)
-                    completion(.success(admin))
-                default:
-                    completion(.failure(.NoAccountType))
-                }
+                
                 
             } else if err != nil {
                 return completion(.failure(.NoDoc))
@@ -107,7 +183,7 @@ class UserService {
     
     func Logout() {
         do {
-        try Auth.auth().signOut()
+            try Auth.auth().signOut()
         } catch let err as NSError {
             fatalError("ERROR \(err.localizedDescription)")
         }

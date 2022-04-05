@@ -24,6 +24,16 @@
 		1E36FC6627E8DECD0029EE0F /* Admin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E36FC6527E8DECD0029EE0F /* Admin.swift */; };
 		1E36FC6927E8E2630029EE0F /* Admin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E36FC6827E8E2630029EE0F /* Admin.storyboard */; };
 		1E36FC6C27E8E2CA0029EE0F /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E36FC6B27E8E2C90029EE0F /* UserService.swift */; };
+		1EB5AEA027EE6B02004A571A /* OrgList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1EB5AE9F27EE6B02004A571A /* OrgList.storyboard */; };
+		1EB5AEA727EE70D6004A571A /* OrgListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB5AEA627EE70D6004A571A /* OrgListTableViewCell.swift */; };
+		1EB5AEA927EE70ED004A571A /* OrgListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB5AEA827EE70ED004A571A /* OrgListViewController.swift */; };
+		1EB5AEAB27EE70FE004A571A /* OrgService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB5AEAA27EE70FE004A571A /* OrgService.swift */; };
+		1EB5AEAD27EE7D5B004A571A /* Org.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB5AEAC27EE7D5B004A571A /* Org.swift */; };
+		1EB5AEB027F00213004A571A /* HideKeyboardExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB5AEAF27F00213004A571A /* HideKeyboardExtension.swift */; };
+		1EB5AEB327F02E1D004A571A /* Moderator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB5AEB227F02E1D004A571A /* Moderator.swift */; };
+		1EB5AEB527F02E2A004A571A /* Agent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB5AEB427F02E2A004A571A /* Agent.swift */; };
+		1EB5AEB727F02E39004A571A /* Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB5AEB627F02E39004A571A /* Manager.swift */; };
+		1EB5AEB927F044F8004A571A /* RegisterUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB5AEB827F044F7004A571A /* RegisterUserViewController.swift */; };
 		1EE7F00127EB95E30045D7CF /* BounceAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE7F00027EB95E30045D7CF /* BounceAnimation.swift */; };
 		1EE7F00327EBA7B50045D7CF /* VerifyEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE7F00227EBA7B50045D7CF /* VerifyEmailViewController.swift */; };
 		1EEDD04D27EAE8D8007631B1 /* LoginUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EEDD04C27EAE8D8007631B1 /* LoginUserViewController.swift */; };
@@ -65,6 +75,16 @@
 		1E36FC6527E8DECD0029EE0F /* Admin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Admin.swift; sourceTree = "<group>"; };
 		1E36FC6827E8E2630029EE0F /* Admin.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Admin.storyboard; sourceTree = "<group>"; };
 		1E36FC6B27E8E2C90029EE0F /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		1EB5AE9F27EE6B02004A571A /* OrgList.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = OrgList.storyboard; sourceTree = "<group>"; };
+		1EB5AEA627EE70D6004A571A /* OrgListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrgListTableViewCell.swift; sourceTree = "<group>"; };
+		1EB5AEA827EE70ED004A571A /* OrgListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrgListViewController.swift; sourceTree = "<group>"; };
+		1EB5AEAA27EE70FE004A571A /* OrgService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrgService.swift; sourceTree = "<group>"; };
+		1EB5AEAC27EE7D5B004A571A /* Org.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Org.swift; sourceTree = "<group>"; };
+		1EB5AEAF27F00213004A571A /* HideKeyboardExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HideKeyboardExtension.swift; sourceTree = "<group>"; };
+		1EB5AEB227F02E1D004A571A /* Moderator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Moderator.swift; sourceTree = "<group>"; };
+		1EB5AEB427F02E2A004A571A /* Agent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Agent.swift; sourceTree = "<group>"; };
+		1EB5AEB627F02E39004A571A /* Manager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Manager.swift; sourceTree = "<group>"; };
+		1EB5AEB827F044F7004A571A /* RegisterUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterUserViewController.swift; sourceTree = "<group>"; };
 		1EE7F00027EB95E30045D7CF /* BounceAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BounceAnimation.swift; sourceTree = "<group>"; };
 		1EE7F00227EBA7B50045D7CF /* VerifyEmailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyEmailViewController.swift; sourceTree = "<group>"; };
 		1EEDD04C27EAE8D8007631B1 /* LoginUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUserViewController.swift; sourceTree = "<group>"; };
@@ -123,8 +143,9 @@
 		1E36FC2427E8CF160029EE0F /* TicketManagerEnterprise */ = {
 			isa = PBXGroup;
 			children = (
-				1EE7EFFF27EB95C80045D7CF /* Animations */,
+				1EB5AEAE27F001F6004A571A /* Extensions */,
 				1E36FC6727E8E24F0029EE0F /* Admin */,
+				1EE7EFFF27EB95C80045D7CF /* Animations */,
 				1E36FC6127E8DCDA0029EE0F /* Users */,
 				1E36FC2527E8CF160029EE0F /* AppDelegate.swift */,
 				1E36FC2727E8CF160029EE0F /* SceneDelegate.swift */,
@@ -170,6 +191,9 @@
 			children = (
 				1E36FC6327E8DD0F0029EE0F /* User.swift */,
 				1E36FC6527E8DECD0029EE0F /* Admin.swift */,
+				1EB5AEB227F02E1D004A571A /* Moderator.swift */,
+				1EB5AEB427F02E2A004A571A /* Agent.swift */,
+				1EB5AEB627F02E39004A571A /* Manager.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -177,7 +201,11 @@
 		1E36FC6727E8E24F0029EE0F /* Admin */ = {
 			isa = PBXGroup;
 			children = (
+				1EB5AEA527EE70B4004A571A /* Model */,
+				1EB5AEA427EE70AB004A571A /* Services */,
+				1EB5AEA327EE70A3004A571A /* Views */,
 				1E36FC6827E8E2630029EE0F /* Admin.storyboard */,
+				1EB5AE9F27EE6B02004A571A /* OrgList.storyboard */,
 			);
 			path = Admin;
 			sourceTree = "<group>";
@@ -188,6 +216,39 @@
 				1E36FC6B27E8E2C90029EE0F /* UserService.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		1EB5AEA327EE70A3004A571A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				1EB5AEA627EE70D6004A571A /* OrgListTableViewCell.swift */,
+				1EB5AEA827EE70ED004A571A /* OrgListViewController.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		1EB5AEA427EE70AB004A571A /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				1EB5AEAA27EE70FE004A571A /* OrgService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		1EB5AEA527EE70B4004A571A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				1EB5AEAC27EE7D5B004A571A /* Org.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		1EB5AEAE27F001F6004A571A /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				1EB5AEAF27F00213004A571A /* HideKeyboardExtension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		1EE7EFFF27EB95C80045D7CF /* Animations */ = {
@@ -203,6 +264,7 @@
 			children = (
 				1EEDD04C27EAE8D8007631B1 /* LoginUserViewController.swift */,
 				1EE7F00227EBA7B50045D7CF /* VerifyEmailViewController.swift */,
+				1EB5AEB827F044F7004A571A /* RegisterUserViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -321,6 +383,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1E36FC3227E8CF170029EE0F /* LaunchScreen.storyboard in Resources */,
+				1EB5AEA027EE6B02004A571A /* OrgList.storyboard in Resources */,
 				1E36FC6927E8E2630029EE0F /* Admin.storyboard in Resources */,
 				1E36FC5727E8CFC50029EE0F /* GoogleService-Info.plist in Resources */,
 				1E36FC2F27E8CF170029EE0F /* Assets.xcassets in Resources */,
@@ -349,15 +412,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1EB5AEAD27EE7D5B004A571A /* Org.swift in Sources */,
 				1EEDD04F27EAEDCA007631B1 /* AlertMessageService.swift in Sources */,
+				1EB5AEB027F00213004A571A /* HideKeyboardExtension.swift in Sources */,
 				1E36FC6C27E8E2CA0029EE0F /* UserService.swift in Sources */,
 				1E36FC6427E8DD0F0029EE0F /* User.swift in Sources */,
+				1EB5AEB527F02E2A004A571A /* Agent.swift in Sources */,
 				1EEDD04D27EAE8D8007631B1 /* LoginUserViewController.swift in Sources */,
+				1EB5AEA727EE70D6004A571A /* OrgListTableViewCell.swift in Sources */,
 				1E36FC2627E8CF160029EE0F /* AppDelegate.swift in Sources */,
 				1EE7F00327EBA7B50045D7CF /* VerifyEmailViewController.swift in Sources */,
+				1EB5AEB927F044F8004A571A /* RegisterUserViewController.swift in Sources */,
 				1EE7F00127EB95E30045D7CF /* BounceAnimation.swift in Sources */,
+				1EB5AEAB27EE70FE004A571A /* OrgService.swift in Sources */,
+				1EB5AEB327F02E1D004A571A /* Moderator.swift in Sources */,
 				1E36FC6627E8DECD0029EE0F /* Admin.swift in Sources */,
+				1EB5AEA927EE70ED004A571A /* OrgListViewController.swift in Sources */,
 				1E36FC2827E8CF160029EE0F /* SceneDelegate.swift in Sources */,
+				1EB5AEB727F02E39004A571A /* Manager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

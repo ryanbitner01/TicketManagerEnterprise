@@ -11,15 +11,19 @@ class VerifyEmailViewController: UIViewController {
 
     @IBOutlet weak var messageLabel: UILabel!
     
-    let userService = UserService.instance
+    var viewModel: VerifyEmailViewModel?
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.messageLabel.text = "Verification email sent to \(viewModel!.email) Didn't Receive the verification email click bellow to resend it."
 
         // Do any additional setup after loading the view.
     }
     
     @IBAction func sendButtonTapped(_ sender: Any) {
-        userService.sendVerificationEmail()
+        viewModel?.sendVerificationEmail()
     }
     
     /*

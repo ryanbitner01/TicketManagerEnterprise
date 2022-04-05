@@ -15,6 +15,8 @@ class Admin: User, Codable {
     
     var email: String
     
+    var accountType: UserType = .admin
+    
   //  var id: UUID
     
     init (email: String, uuid: UUID, firstName: String, lastName: String) {

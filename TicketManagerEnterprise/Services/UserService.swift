@@ -50,11 +50,7 @@ extension UserServiceError: LocalizedError {
 }
 
 class UserService {
-    
-    var user: User?
-    
-    static var instance: UserService = UserService()
-    
+            
     // MARK: Add User
     
     func saveUser(email: String, firstName: String, lastName: String, uuid: String) {
@@ -94,24 +90,12 @@ class UserService {
                 if let data = result.data as? Bool {
                     completion(data)
                 } else {
-                    print("NO BOOL")
+                    completion(true)
                 }
+            } else {
+                completion(true)
             }
         }
-    }
-    
-    func passwordVerification(_ text: String) -> Bool {
-        let requirements = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$"
-        return NSPredicate(format: "SELF MATCHES %@", requirements).evaluate(with: text)
-    }
-    
-    func emailVerification(_ text: String) -> Bool {
-        let requirements = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-        return NSPredicate(format: "SELF MATCHES %@", requirements).evaluate(with: text)
-    }
-    
-    func passwordMatch(password1: String, password2: String) -> Bool {
-        return password1 == password2
     }
     
     // MARK: Login User
@@ -122,8 +106,16 @@ class UserService {
         }
     }
     
+    func setRememberMe(_ rememberMe: Bool) {
+        UserDefaults.standard.rememeberMe = rememberMe
+    }
+    
     func getRemmemberedEmail() -> String? {
         return UserDefaults.standard.userEmail
+    }
+    
+    func getRememberMe() -> Bool? {
+        return UserDefaults.standard.rememeberMe
     }
     
     func CheckLogin(username: String, password: String, completion: @escaping (Result<String, UserServiceError>) -> Void) {
@@ -147,11 +139,12 @@ class UserService {
             if let qs = qs {
                 let doc = qs.documents[0]
                 let data = doc.data()
-                let accountType = data["accountType"] as? String
+                guard let accountType = data["accountType"] as? String else {return}
                 do {
                     let jsonData = try JSONSerialization.data(withJSONObject: data, options: .prettyPrinted)
+                    let accountType = UserType(rawValue: accountType)
                     switch accountType {
-                    case String(describing: AccountType.admin):
+                    case .admin:
                         let user = try JSONDecoder().decode(Admin.self, from: jsonData)
                         completion(.success(user))
                     default:
@@ -165,18 +158,6 @@ class UserService {
                 
             } else if err != nil {
                 return completion(.failure(.NoDoc))
-            }
-        }
-    }
-    
-    func login(email: String, completion: @escaping (UserServiceError?) -> Void) {
-        getUser(email: email) { result in
-            switch result {
-            case .success(let user):
-                self.user = user
-                completion(nil)
-            case .failure(let err):
-                completion(err)
             }
         }
     }
@@ -202,6 +183,15 @@ extension UserDefaults {
     var userEmail: String? {
         get {
             self.string(forKey: #function)
+        }
+        set {
+            self.setValue(newValue, forKey: #function)
+        }
+    }
+    
+    var rememeberMe: Bool {
+        get {
+            self.bool(forKey: #function)
         }
         set {
             self.setValue(newValue, forKey: #function)

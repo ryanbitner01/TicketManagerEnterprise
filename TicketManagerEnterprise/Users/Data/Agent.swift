@@ -16,5 +16,6 @@ class Agent: User {
     
     var lastName: String
     
+    var accountType: UserType = .agent
     
 }

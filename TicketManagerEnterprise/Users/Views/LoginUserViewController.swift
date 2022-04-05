@@ -20,11 +20,12 @@ class LoginUserViewController: UIViewController {
     @IBOutlet weak var incorrectUserLabel: UILabel!
     @IBOutlet weak var passwordTextField: UITextField!
     
-    var userService: UserService = UserService.instance
+    var viewModel: LoginUserViewModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         getRememberedEmail()
+        self.viewModel = LoginUserViewModel()
         self.hideKeyboardTappedAround()
         // Do any additional setup after loading the view.
     }
@@ -37,12 +38,14 @@ class LoginUserViewController: UIViewController {
         checkValidLogin()
     }
     
+    func updateViewModel() {
+        self.viewModel = LoginUserViewModel(email: emailTextField.text!, password: passwordTextField.text!, rememberMe: rememberMeButton.isSelected)
+    }
+    
     func checkValidLogin() {
-        userService.CheckLogin(username: emailTextField.text!, password: passwordTextField.text!) { result in
-            switch result {
-            case .success(let email):
-                self.login(email: email)
-            case .failure(let err):
+        updateViewModel()
+        viewModel?.checkValidLogin() { err in
+            if let err = err {
                 DispatchQueue.main.async {
                     switch err {
                     case .LoginNotValid:
@@ -54,23 +57,14 @@ class LoginUserViewController: UIViewController {
                         
                     }
                 }
+            } else {
+                self.login()
             }
         }
     }
     
-    func login(email: String) {
-        self.userService.login(email: email) { err in
-            if let err = err {
-                DispatchQueue.main.async {
-                    self.showAlertWithMessage(err.errorDescription!)
-                }
-            } else {
-                DispatchQueue.main.async {
-                    self.userService.setRememberedEmail(rememberMe: self.rememberMeButton.isSelected, email: email)
-                    self.segueFromLoginVC(segueId: .ToAdminUserVC)
-                }
-            }
-        }
+    func login() {
+        segueFromLoginVC(segueId: .ToAdminUserVC)
     }
     
     func segueFromLoginVC(segueId: SegueIdentifier) {
@@ -83,16 +77,18 @@ class LoginUserViewController: UIViewController {
     }
     
     func getRememberedEmail() {
-        if let email = userService.getRemmemberedEmail() {
-            emailTextField.text = email
-            rememberMeButton.isSelected = true
-        } else {
-            rememberMeButton.isSelected = false
-        }
+        self.emailTextField.text = viewModel?.getRememberedEmail()
     }
     
     func setRememberMeState() {
         rememberMeButton.isSelected.toggle()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == SegueIdentifier.ToVerifyEmailVC.rawValue {
+            let verifyEmailVC = segue.destination as! VerifyEmailViewController
+            verifyEmailVC.viewModel = VerifyEmailViewModel(email: self.viewModel?.email ?? "")
+        }
     }
 }
 

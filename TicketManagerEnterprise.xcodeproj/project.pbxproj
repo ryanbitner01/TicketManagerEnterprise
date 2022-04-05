@@ -24,6 +24,9 @@
 		1E36FC6627E8DECD0029EE0F /* Admin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E36FC6527E8DECD0029EE0F /* Admin.swift */; };
 		1E36FC6927E8E2630029EE0F /* Admin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E36FC6827E8E2630029EE0F /* Admin.storyboard */; };
 		1E36FC6C27E8E2CA0029EE0F /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E36FC6B27E8E2C90029EE0F /* UserService.swift */; };
+		1E6FCEF727FCBC0A001327E5 /* LoginUserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6FCEF627FCBC0A001327E5 /* LoginUserViewModel.swift */; };
+		1E6FCEF927FCC728001327E5 /* RegisterUserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6FCEF827FCC728001327E5 /* RegisterUserViewModel.swift */; };
+		1E6FCEFB27FCDC32001327E5 /* VerifyEmailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6FCEFA27FCDC32001327E5 /* VerifyEmailViewModel.swift */; };
 		1EB5AEA027EE6B02004A571A /* OrgList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1EB5AE9F27EE6B02004A571A /* OrgList.storyboard */; };
 		1EB5AEA727EE70D6004A571A /* OrgListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB5AEA627EE70D6004A571A /* OrgListTableViewCell.swift */; };
 		1EB5AEA927EE70ED004A571A /* OrgListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB5AEA827EE70ED004A571A /* OrgListViewController.swift */; };
@@ -75,6 +78,9 @@
 		1E36FC6527E8DECD0029EE0F /* Admin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Admin.swift; sourceTree = "<group>"; };
 		1E36FC6827E8E2630029EE0F /* Admin.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Admin.storyboard; sourceTree = "<group>"; };
 		1E36FC6B27E8E2C90029EE0F /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		1E6FCEF627FCBC0A001327E5 /* LoginUserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUserViewModel.swift; sourceTree = "<group>"; };
+		1E6FCEF827FCC728001327E5 /* RegisterUserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterUserViewModel.swift; sourceTree = "<group>"; };
+		1E6FCEFA27FCDC32001327E5 /* VerifyEmailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyEmailViewModel.swift; sourceTree = "<group>"; };
 		1EB5AE9F27EE6B02004A571A /* OrgList.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = OrgList.storyboard; sourceTree = "<group>"; };
 		1EB5AEA627EE70D6004A571A /* OrgListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrgListTableViewCell.swift; sourceTree = "<group>"; };
 		1EB5AEA827EE70ED004A571A /* OrgListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrgListViewController.swift; sourceTree = "<group>"; };
@@ -143,6 +149,7 @@
 		1E36FC2427E8CF160029EE0F /* TicketManagerEnterprise */ = {
 			isa = PBXGroup;
 			children = (
+				1E36FC6A27E8E2B10029EE0F /* Services */,
 				1EB5AEAE27F001F6004A571A /* Extensions */,
 				1E36FC6727E8E24F0029EE0F /* Admin */,
 				1EE7EFFF27EB95C80045D7CF /* Animations */,
@@ -178,8 +185,8 @@
 		1E36FC6127E8DCDA0029EE0F /* Users */ = {
 			isa = PBXGroup;
 			children = (
+				1E6FCEF527FCBBD0001327E5 /* ViewModel */,
 				1EEDD04927EAE852007631B1 /* Views */,
-				1E36FC6A27E8E2B10029EE0F /* Services */,
 				1E36FC6227E8DCF90029EE0F /* Data */,
 				1E36FC2B27E8CF160029EE0F /* Main.storyboard */,
 			);
@@ -202,7 +209,6 @@
 			isa = PBXGroup;
 			children = (
 				1EB5AEA527EE70B4004A571A /* Model */,
-				1EB5AEA427EE70AB004A571A /* Services */,
 				1EB5AEA327EE70A3004A571A /* Views */,
 				1E36FC6827E8E2630029EE0F /* Admin.storyboard */,
 				1EB5AE9F27EE6B02004A571A /* OrgList.storyboard */,
@@ -213,9 +219,20 @@
 		1E36FC6A27E8E2B10029EE0F /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				1EB5AEAA27EE70FE004A571A /* OrgService.swift */,
 				1E36FC6B27E8E2C90029EE0F /* UserService.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		1E6FCEF527FCBBD0001327E5 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				1E6FCEF627FCBC0A001327E5 /* LoginUserViewModel.swift */,
+				1E6FCEF827FCC728001327E5 /* RegisterUserViewModel.swift */,
+				1E6FCEFA27FCDC32001327E5 /* VerifyEmailViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		1EB5AEA327EE70A3004A571A /* Views */ = {
@@ -225,14 +242,6 @@
 				1EB5AEA827EE70ED004A571A /* OrgListViewController.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		1EB5AEA427EE70AB004A571A /* Services */ = {
-			isa = PBXGroup;
-			children = (
-				1EB5AEAA27EE70FE004A571A /* OrgService.swift */,
-			);
-			path = Services;
 			sourceTree = "<group>";
 		};
 		1EB5AEA527EE70B4004A571A /* Model */ = {
@@ -421,7 +430,9 @@
 				1EEDD04D27EAE8D8007631B1 /* LoginUserViewController.swift in Sources */,
 				1EB5AEA727EE70D6004A571A /* OrgListTableViewCell.swift in Sources */,
 				1E36FC2627E8CF160029EE0F /* AppDelegate.swift in Sources */,
+				1E6FCEFB27FCDC32001327E5 /* VerifyEmailViewModel.swift in Sources */,
 				1EE7F00327EBA7B50045D7CF /* VerifyEmailViewController.swift in Sources */,
+				1E6FCEF927FCC728001327E5 /* RegisterUserViewModel.swift in Sources */,
 				1EB5AEB927F044F8004A571A /* RegisterUserViewController.swift in Sources */,
 				1EE7F00127EB95E30045D7CF /* BounceAnimation.swift in Sources */,
 				1EB5AEAB27EE70FE004A571A /* OrgService.swift in Sources */,
@@ -430,6 +441,7 @@
 				1EB5AEA927EE70ED004A571A /* OrgListViewController.swift in Sources */,
 				1E36FC2827E8CF160029EE0F /* SceneDelegate.swift in Sources */,
 				1EB5AEB727F02E39004A571A /* Manager.swift in Sources */,
+				1E6FCEF727FCBC0A001327E5 /* LoginUserViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

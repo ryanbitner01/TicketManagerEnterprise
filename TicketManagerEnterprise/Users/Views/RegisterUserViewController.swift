@@ -9,11 +9,15 @@ import UIKit
 
 class RegisterUserViewController: UIViewController {
     
+    enum segueID: String {
+        case verifyEmail = "ToVerifyEmailVC"
+    }
+    
     enum InvalidEmailMessage: String {
         case duplicateEmail = "A user with this email already exists"
         case invalidFormat = "This is not a valid email address"
     }
-
+    
     @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var firstNameBlankLabel: UILabel!
     @IBOutlet weak var lastNameBlankLabel: UILabel!
@@ -26,12 +30,7 @@ class RegisterUserViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var retypePasswordTextField: UITextField!
     
-    let userService: UserService = UserService.instance
-    var shouldSave: Bool = false {
-        didSet {
-            saveUser()
-        }
-    }
+    var viewModel = RegisterUserViewModel()
     
     override func viewDidAppear(_ animated: Bool) {
         self.clearText()
@@ -40,7 +39,7 @@ class RegisterUserViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardTappedAround()
-        self.initializeView()
+        self.hideAlerts()
         // Do any additional setup after loading the view.
     }
     
@@ -52,7 +51,7 @@ class RegisterUserViewController: UIViewController {
         self.retypePasswordTextField.text = ""
     }
     
-    func initializeView() {
+    func hideAlerts() {
         self.invalidEmailLabel.isHidden = true
         self.invalidPasswordLabel.isHidden = true
         self.passwordMatchLabel.isHidden = true
@@ -60,38 +59,35 @@ class RegisterUserViewController: UIViewController {
         self.firstNameBlankLabel.isHidden = true
     }
     
-    func checkOtherRequirements(duplicateEmail: Bool) -> Bool {
-        let validEmail = self.userService.emailVerification(self.emailTextField.text!)
-        let validPassword = self.userService.passwordVerification(self.passwordTextField.text!)
-        let passwordMatch = self.userService.passwordMatch(password1: self.passwordTextField.text!, password2: self.retypePasswordTextField.text!)
-        let firstNameEmpty = !self.firstNameTextField.text!.isEmpty
-        let lastNameEmpty = !self.lastNameTextField.text!.isEmpty
-        DispatchQueue.main.async {
-            self.invalidPasswordLabel.isHidden = validPassword
-            self.passwordMatchLabel.isHidden = passwordMatch
-            self.firstNameBlankLabel.isHidden = firstNameEmpty
-            self.lastNameBlankLabel.isHidden = lastNameEmpty
-            if duplicateEmail {
-                self.showEmailLabel(message: .duplicateEmail)
-            } else if !validEmail {
-                self.showEmailLabel(message: .invalidFormat)
-            }
-        }
-        return validEmail && validPassword && passwordMatch && firstNameEmpty && lastNameEmpty && !duplicateEmail
-    }
-    
     func checkRequirements() {
-        userService.checkForDuplicateEmailInFirestore(email: emailTextField.text!) { duplicate in
-            if !duplicate {
-                let requirements = self.checkOtherRequirements(duplicateEmail: duplicate)
-                self.shouldSave = requirements
+        updateViewModel()
+        hideAlerts()
+        viewModel.checkValidData { errors in
+            if errors.isEmpty {
+                self.saveUser()
             }
             else {
-                DispatchQueue.main.async {
-                    let requirements = self.checkOtherRequirements(duplicateEmail: duplicate)
-                    self.shouldSave = requirements
+                for error in errors {
+                    self.handleRegistrationAlert(error)
                 }
             }
+        }
+    }
+    
+    func handleRegistrationAlert(_ error: RegistrationError) {
+        switch error {
+        case .invalidEmail:
+            self.showEmailLabel(message: .invalidFormat)
+        case .duplicateEmail:
+            self.showEmailLabel(message: .duplicateEmail)
+        case .invalidPassword:
+            self.invalidPasswordLabel.isHidden = false
+        case .passwordMatch:
+            self.passwordMatchLabel.isHidden = false
+        case .emptyLastName:
+            self.lastNameBlankLabel.isHidden = false
+        case .emptyFirstName:
+            self.firstNameBlankLabel.isHidden = false
         }
     }
     
@@ -105,14 +101,27 @@ class RegisterUserViewController: UIViewController {
         checkRequirements()
     }
     
+    func updateViewModel() {
+        viewModel = RegisterUserViewModel(
+            email: emailTextField.text!,
+            password: passwordTextField.text!,
+            confirmPassword: retypePasswordTextField.text!,
+            firstName: firstNameTextField.text!,
+            lastName: lastNameTextField.text!)
+    }
+    
     func saveUser() {
-        if shouldSave {
-            print("SAVED")
-            userService.registerUser(email: emailTextField.text!, password: passwordTextField.text!)
-            userService.saveUser(email: emailTextField.text!, firstName: firstNameTextField.text!, lastName: lastNameTextField.text!, uuid: UUID().uuidString)
-            self.performSegue(withIdentifier: "ToVerifyEmailVC", sender: self)
-            self.clearText()
+        viewModel.registerNewUser()
+        self.clearText()
+        self.performSegue(withIdentifier: segueID.verifyEmail.rawValue , sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == segueID.verifyEmail.rawValue {
+            let verifyEmailVC = segue.destination as! VerifyEmailViewController
+            verifyEmailVC.viewModel = VerifyEmailViewModel(email: self.viewModel.email)
+            
         }
     }
-
+    
 }

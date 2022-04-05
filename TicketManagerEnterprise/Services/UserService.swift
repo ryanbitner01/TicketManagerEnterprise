@@ -139,11 +139,12 @@ class UserService {
             if let qs = qs {
                 let doc = qs.documents[0]
                 let data = doc.data()
-                let accountType = data["accountType"] as? String
+                guard let accountType = data["accountType"] as? String else {return}
                 do {
                     let jsonData = try JSONSerialization.data(withJSONObject: data, options: .prettyPrinted)
+                    let accountType = UserType(rawValue: accountType)
                     switch accountType {
-                    case String(describing: AccountType.admin):
+                    case .admin:
                         let user = try JSONDecoder().decode(Admin.self, from: jsonData)
                         completion(.success(user))
                     default:

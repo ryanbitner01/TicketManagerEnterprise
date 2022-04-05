@@ -16,5 +16,6 @@ class Manager: User {
     
     var lastName: String
     
+    var accountType: UserType = .manager
     
 }

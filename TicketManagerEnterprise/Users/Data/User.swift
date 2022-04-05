@@ -7,13 +7,10 @@
 
 import Foundation
 
-enum AccountType: String {
-    case admin
-}
-
 protocol User: Codable {
     var email: String {get set}
     // var id: UUID {get}
     var firstName: String {get set}
     var lastName: String {get set}
+    var accountType: UserType {get set}
 }

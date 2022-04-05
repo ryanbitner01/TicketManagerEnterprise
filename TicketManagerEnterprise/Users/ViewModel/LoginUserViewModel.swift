@@ -6,11 +6,10 @@
 //
 
 import Foundation
-import Combine
 
 class LoginUserViewModel {
-    @Published var email: String
-    @Published var password: String
+    var email: String
+    var password: String
     var rememberMe: Bool
     
     init(email: String = "", password: String = "", rememberMe: Bool = false) {

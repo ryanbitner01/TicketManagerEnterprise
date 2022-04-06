@@ -147,6 +147,9 @@ class UserService {
                     case .admin:
                         let user = try JSONDecoder().decode(Admin.self, from: jsonData)
                         completion(.success(user))
+                    case .user:
+                        let user = try JSONDecoder().decode(GenericUser.self, from: jsonData)
+                        completion(.success(user))
                     default:
                         completion(.failure(.NoAccountType))
                     }

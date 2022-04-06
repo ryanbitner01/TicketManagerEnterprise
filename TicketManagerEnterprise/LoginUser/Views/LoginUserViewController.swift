@@ -11,8 +11,8 @@ import SwiftUI
 class LoginUserViewController: UIViewController {
     
     enum SegueIdentifier: String {
-        case ToAdminUserVC
-        case ToVerifyEmailVC
+        case toVerifyEmailVC = "ToVerifyEmailVC"
+        case toLoadUserVC = "LoadUserVC"
     }
     
     @IBOutlet weak var rememberMeButton: UIButton!
@@ -51,7 +51,7 @@ class LoginUserViewController: UIViewController {
                     case .LoginNotValid:
                         self.showIncorrectPasswordLabel()
                     case .NotVerified:
-                        self.segueFromLoginVC(segueId: .ToVerifyEmailVC)
+                        self.segueFromLoginVC(segueId: .toVerifyEmailVC)
                     default:
                         self.showAlertWithMessage(err.localizedDescription)
                         
@@ -64,7 +64,7 @@ class LoginUserViewController: UIViewController {
     }
     
     func login() {
-        segueFromLoginVC(segueId: .ToAdminUserVC)
+        segueFromLoginVC(segueId: .toLoadUserVC)
     }
     
     func segueFromLoginVC(segueId: SegueIdentifier) {
@@ -85,9 +85,13 @@ class LoginUserViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == SegueIdentifier.ToVerifyEmailVC.rawValue {
+        if segue.identifier == SegueIdentifier.toVerifyEmailVC.rawValue {
             let verifyEmailVC = segue.destination as! VerifyEmailViewController
             verifyEmailVC.viewModel = VerifyEmailViewModel(email: self.viewModel?.email ?? "")
+        }
+        if segue.identifier == SegueIdentifier.toLoadUserVC.rawValue {
+            let loadUserVC = segue.destination as! LoadUserViewController
+            loadUserVC.viewModel = LoadUserViewModel(email: self.viewModel?.email ?? "")
         }
     }
 }

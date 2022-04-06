@@ -107,5 +107,17 @@ class OrgServiceFirebase: OrgService {
         }
     }
     
+    // MARK: NEW ORG
+    func createOrg(orgName: String) {
+        let requestsRef = db.collection("OrgRequests")
+        let ownerEmail = Auth.auth().currentUser?.email
+        let data: [String: Any] = [
+            "orgName": orgName,
+            "owner": ownerEmail!,
+            "orgID": UUID().uuidString,
+        ]
+        requestsRef.document().setData(data)
+    }
+    
     
 }

@@ -47,3 +47,37 @@ exports.checkForDuplicateEmails = functions.https.onCall((data, context) => {
       });
 });
 
+exports.handleNewOrgRequest = functions.firestore
+    .document("OrgRequests/{newDoc}")
+    .onCreate((snap, context) => {
+      const data = snap.data();
+      return admin.firestore().collection("Orgs").doc(data.orgName).set({
+        orgID: data.orgID,
+        orgName: data.orgName,
+        orgOwner: data.orgOwner,
+      })
+          .then(updateAccountType(data.orgOwner, "Moderator"))
+          .then(deleteOrgRequest(snap.id));
+    });
+
+/**
+ * @param {String} docID the name of the document
+ * @return {Promise} write promise
+*/
+function deleteOrgRequest(docID) {
+  return admin.firestore()
+      .collection("OrgRequests")
+      .doc(docID).delete();
+}
+
+/**
+ * @param {String} email email of user
+ * @param {String} accountType account type you would like to update to
+ * @return {Promise} update promise
+ */
+function updateAccountType(email, accountType) {
+  return admin.firestore().collection("users").doc(email).update({
+    accountType: accountType,
+  });
+}
+

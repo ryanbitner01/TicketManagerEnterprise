@@ -186,10 +186,10 @@
             </objects>
             <point key="canvasLocation" x="2753" y="5"/>
         </scene>
-        <!--View Controller-->
+        <!--Load User View Controller-->
         <scene sceneID="a2r-07-tbF">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="HRD-77-IEg" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="HRD-77-IEg" customClass="LoadUserViewController" customModule="TicketManagerEnterprise" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Acf-uk-kWu">
                         <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -214,10 +214,22 @@
                             <constraint firstItem="U3d-gB-4jF" firstAttribute="leading" secondItem="g1L-DP-Bbv" secondAttribute="leading" id="fFZ-rV-9HC"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <segue destination="BF6-9r-JZA" kind="presentation" identifier="admin" modalPresentationStyle="fullScreen" id="ido-V3-X2x"/>
+                        <segue destination="N2J-TX-9CK" kind="presentation" identifier="user" modalPresentationStyle="fullScreen" id="dJC-T2-URx"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5pd-f5-Zhy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1839" y="-593"/>
+            <point key="canvasLocation" x="1967" y="-570"/>
+        </scene>
+        <!--User-->
+        <scene sceneID="EjT-Kb-wcP">
+            <objects>
+                <viewControllerPlaceholder storyboardName="User" id="N2J-TX-9CK" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wbh-fM-Ro8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2615" y="-672"/>
         </scene>
         <!--Admin-->
         <scene sceneID="ka3-FE-hOq">
@@ -227,7 +239,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="L5E-s6-GUq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2702" y="-632"/>
+            <point key="canvasLocation" x="2607" y="-471"/>
         </scene>
         <!--Create User-->
         <scene sceneID="MI3-AH-fnv">

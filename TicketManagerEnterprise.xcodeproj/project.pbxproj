@@ -35,6 +35,9 @@
 		1E6FCF0A27FD1227001327E5 /* CreateOrgViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6FCF0927FD1227001327E5 /* CreateOrgViewModel.swift */; };
 		1E6FCF0C27FD2559001327E5 /* GenericUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6FCF0B27FD2559001327E5 /* GenericUser.swift */; };
 		1E6FCF0E28121081001327E5 /* LogoutExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6FCF0D28121081001327E5 /* LogoutExtension.swift */; };
+		1E6FCF1128138D21001327E5 /* OrgListCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6FCF1028138D21001327E5 /* OrgListCellViewModel.swift */; };
+		1E6FCF1328138DF1001327E5 /* OrgListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6FCF1228138DF1001327E5 /* OrgListViewModel.swift */; };
+		1E6FCF152813DA97001327E5 /* prettyJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6FCF142813DA97001327E5 /* prettyJson.swift */; };
 		1EB5AEA027EE6B02004A571A /* OrgList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1EB5AE9F27EE6B02004A571A /* OrgList.storyboard */; };
 		1EB5AEA727EE70D6004A571A /* OrgListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB5AEA627EE70D6004A571A /* OrgListTableViewCell.swift */; };
 		1EB5AEA927EE70ED004A571A /* OrgListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB5AEA827EE70ED004A571A /* OrgListViewController.swift */; };
@@ -97,6 +100,9 @@
 		1E6FCF0927FD1227001327E5 /* CreateOrgViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOrgViewModel.swift; sourceTree = "<group>"; };
 		1E6FCF0B27FD2559001327E5 /* GenericUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericUser.swift; sourceTree = "<group>"; };
 		1E6FCF0D28121081001327E5 /* LogoutExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutExtension.swift; sourceTree = "<group>"; };
+		1E6FCF1028138D21001327E5 /* OrgListCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrgListCellViewModel.swift; sourceTree = "<group>"; };
+		1E6FCF1228138DF1001327E5 /* OrgListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrgListViewModel.swift; sourceTree = "<group>"; };
+		1E6FCF142813DA97001327E5 /* prettyJson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = prettyJson.swift; sourceTree = "<group>"; };
 		1EB5AE9F27EE6B02004A571A /* OrgList.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = OrgList.storyboard; sourceTree = "<group>"; };
 		1EB5AEA627EE70D6004A571A /* OrgListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrgListTableViewCell.swift; sourceTree = "<group>"; };
 		1EB5AEA827EE70ED004A571A /* OrgListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrgListViewController.swift; sourceTree = "<group>"; };
@@ -226,6 +232,7 @@
 		1E36FC6727E8E24F0029EE0F /* Admin */ = {
 			isa = PBXGroup;
 			children = (
+				1E6FCF0F28138D04001327E5 /* View Model */,
 				1EB5AEA527EE70B4004A571A /* Model */,
 				1EB5AEA327EE70A3004A571A /* Views */,
 				1E36FC6827E8E2630029EE0F /* Admin.storyboard */,
@@ -280,6 +287,15 @@
 			path = "View Models";
 			sourceTree = "<group>";
 		};
+		1E6FCF0F28138D04001327E5 /* View Model */ = {
+			isa = PBXGroup;
+			children = (
+				1E6FCF1028138D21001327E5 /* OrgListCellViewModel.swift */,
+				1E6FCF1228138DF1001327E5 /* OrgListViewModel.swift */,
+			);
+			path = "View Model";
+			sourceTree = "<group>";
+		};
 		1EB5AEA327EE70A3004A571A /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -303,6 +319,7 @@
 				1EEDD04E27EAEDCA007631B1 /* AlertMessageService.swift */,
 				1EB5AEAF27F00213004A571A /* HideKeyboardExtension.swift */,
 				1E6FCF0D28121081001327E5 /* LogoutExtension.swift */,
+				1E6FCF142813DA97001327E5 /* prettyJson.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -470,6 +487,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1E6FCF152813DA97001327E5 /* prettyJson.swift in Sources */,
 				1EB5AEAD27EE7D5B004A571A /* Org.swift in Sources */,
 				1EEDD04F27EAEDCA007631B1 /* AlertMessageService.swift in Sources */,
 				1EB5AEB027F00213004A571A /* HideKeyboardExtension.swift in Sources */,
@@ -479,6 +497,7 @@
 				1E36FC6427E8DD0F0029EE0F /* User.swift in Sources */,
 				1EB5AEB527F02E2A004A571A /* Agent.swift in Sources */,
 				1EEDD04D27EAE8D8007631B1 /* LoginUserViewController.swift in Sources */,
+				1E6FCF1128138D21001327E5 /* OrgListCellViewModel.swift in Sources */,
 				1EB5AEA727EE70D6004A571A /* OrgListTableViewCell.swift in Sources */,
 				1E36FC2627E8CF160029EE0F /* AppDelegate.swift in Sources */,
 				1E6FCEFB27FCDC32001327E5 /* VerifyEmailViewModel.swift in Sources */,
@@ -494,6 +513,7 @@
 				1EB5AEAB27EE70FE004A571A /* OrgService.swift in Sources */,
 				1EB5AEB327F02E1D004A571A /* Moderator.swift in Sources */,
 				1E36FC6627E8DECD0029EE0F /* Admin.swift in Sources */,
+				1E6FCF1328138DF1001327E5 /* OrgListViewModel.swift in Sources */,
 				1EB5AEA927EE70ED004A571A /* OrgListViewController.swift in Sources */,
 				1E36FC2827E8CF160029EE0F /* SceneDelegate.swift in Sources */,
 				1EB5AEB727F02E39004A571A /* Manager.swift in Sources */,

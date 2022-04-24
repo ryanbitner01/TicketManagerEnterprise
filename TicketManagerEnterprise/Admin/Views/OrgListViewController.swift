@@ -7,25 +7,22 @@
 
 import UIKit
 
-protocol OrgListVCDelegate {
-    func updateView()
-}
-
-class OrgListViewController: UIViewController, OrgListVCDelegate {
+class OrgListViewController: UIViewController {
     
-    var orgService: OrgService = OrgServiceFirebase.instance
-
+    var orgModel = OrgListViewModel()
+    
     @IBOutlet weak var refreshButton: UIBarButtonItem!
     @IBOutlet weak var listView: UITableView!
     @IBOutlet weak var searchTextBar: UISearchBar!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        orgService.orgListVCDelegate = self
         listView.delegate = self
         listView.dataSource = self
         searchTextBar.delegate = self
         self.hideKeyboardTappedAround()
+        self.refreshData()
+        self.orgModel.parent = self
         // Do any additional setup after loading the view.
     }
     
@@ -40,7 +37,7 @@ class OrgListViewController: UIViewController, OrgListVCDelegate {
     }
     
     func refreshData() {
-        orgService.getAllOrgList()
+        orgModel.getOrgsList()
     }
     
 
@@ -58,13 +55,14 @@ class OrgListViewController: UIViewController, OrgListVCDelegate {
 
 extension OrgListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return orgService.orgQueried.count
+        return orgModel.orgsQueried.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: OrgListTableViewCell.cellIdentifier, for: indexPath) as? OrgListTableViewCell else {return UITableViewCell()}
-        let org = orgService.orgQueried[indexPath.row]
-        cell.org = org
+        let org = orgModel.orgsQueried[indexPath.row]
+        let cellVM = OrgListCellViewModel(provisioned: org.provisioned, orgName: org.name, orgID: "\(org.id)")
+        cell.viewModel = cellVM
         cell.updateCell()
         return cell
     }
@@ -74,6 +72,6 @@ extension OrgListViewController: UITableViewDataSource, UITableViewDelegate {
 
 extension OrgListViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        orgService.queryText = searchBar.text ?? ""
+        orgModel.queriedText = searchBar.text ?? ""
     }
 }

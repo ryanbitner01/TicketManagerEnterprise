@@ -9,12 +9,13 @@ import UIKit
 
 class OrgListTableViewCell: UITableViewCell {
     
-    var org: Org?
+    var viewModel: OrgListCellViewModel?
     
     static let cellIdentifier: String = "OrgListCell"
 
     @IBOutlet weak var idLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var provisionedIndicatorImageView: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -28,8 +29,19 @@ class OrgListTableViewCell: UITableViewCell {
     }
     
     func updateCell() {
-        self.idLabel.text = org?.id
-        self.nameLabel.text = org?.name
+        guard let viewModel = viewModel else {return}
+        self.idLabel.text = "\(viewModel.orgID)"
+        self.nameLabel.text = viewModel.orgName
+        self.updateProvisioned(viewModel.provisioned)
+    }
+    
+    func updateProvisioned(_ provisioned: Bool) {
+        enum provisionImages: String {
+            case provisioned = "checkmark.circle.fill"
+            case notProvisioned = "slash.circle.fill"
+        }
+        
+        provisionedIndicatorImageView.image = provisioned ? UIImage(systemName: provisionImages.provisioned.rawValue): UIImage(systemName: provisionImages.notProvisioned.rawValue)
     }
 
 }

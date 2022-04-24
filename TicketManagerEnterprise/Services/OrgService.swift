@@ -21,67 +21,20 @@ extension OrgError: LocalizedError {
     }
 }
 
-protocol OrgService {
-    var orgArray: [Org] {get set}
-    var orgQueried: [Org] {get set}
-    var queryText: String {get set}
-    var orgListVCDelegate: OrgListVCDelegate? {get set}
-    func getAllOrgList()
-    func searchOrgs(_ text: String)
-}
+class OrgService {
 
-class OrgServiceFirebase: OrgService {
+    let orgServiceDB = db.collection("Orgs")
     
-    var orgListVCDelegate: OrgListVCDelegate?
-    
-    static let instance = OrgServiceFirebase()
-    
-    var orgArray: [Org] = [] {
-        didSet {
-            
-        }
-    }
-    
-    var queryText: String = "" {
-        didSet {
-            searchOrgs(queryText)
-        }
-    }
-    
-    var orgQueried: [Org] = [] {
-        didSet {
-            orgListVCDelegate?.updateView()
-        }
-    }
-
-    let orgServiceDB = db.collection("Orginizations")
-    
-    init() {
-        getAllOrgList()
-    }
-    
-    func getAllOrgList() {
+    func getAllOrgList(completion: @escaping (Result<[Org], Error>) -> Void) {
         self.fetchOrgListFromFirestore { result in
             switch result {
             case .success(let orgs):
                 DispatchQueue.main.async {
-                    self.orgArray = orgs
-                    self.searchOrgs("")
+                    completion(.success(orgs))
                 }
             case .failure(let err):
-                print(err.localizedDescription)
+                completion(.failure(err))
             }
-        }
-    }
-    
-    func searchOrgs(_ text: String) {
-        if text != "" {
-            let queried = orgArray.filter({
-                $0.name.lowercased().contains(text.lowercased()) || $0.id.lowercased().contains(text.lowercased())
-            })
-            self.orgQueried = queried
-        } else {
-            self.orgQueried = orgArray
         }
     }
     

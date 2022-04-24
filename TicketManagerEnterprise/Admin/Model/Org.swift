@@ -9,7 +9,12 @@ import Foundation
 
 struct Org: Identifiable, Codable {
     var name: String
-    let id: String
+    let id: Int
+    let provisioned: Bool
     
-    var users: [String]
+    enum CodingKeys: String, CodingKey {
+        case name = "orgName"
+        case id = "orgID"
+        case provisioned = "provisioned"
+    }
 }

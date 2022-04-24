@@ -10,7 +10,7 @@ import Foundation
 class CreateOrgViewModel {
     var orgName: String
     
-    var orgService = OrgServiceFirebase()
+    var orgService = OrgService()
     
     init(orgName: String = "") {
         self.orgName = orgName
